@@ -1,39 +1,43 @@
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { PageHero } from "@/components/layout/PageHero";
 import { BlockRenderer } from "@/components/sections/BlockRenderer";
-import { CtaBand } from "@/components/sections/CtaBand";
 import type { PageContent } from "@/lib/types";
 
-/** T2 content page: navy hero H1 → verbatim prose → CTA band. */
+/** T2 content page: premium PageHero → verbatim prose. */
 export function ContentPage({
   content,
   title,
+  eyebrow = "Midland Eye",
+  highlight,
   intro,
-  cta = true,
   children,
 }: {
   content: PageContent;
   title: string;
+  eyebrow?: string;
+  highlight?: string;
   intro?: string;
-  cta?: boolean;
   children?: React.ReactNode;
 }) {
-  const blocks = content.blocks.filter(
-    (b, i) => !(i < 2 && b.t === "h1" && b.text.trim().toLowerCase() === title.trim().toLowerCase())
-  );
+  // Drop the leading title H1 (rendered by the hero instead), by position.
+  const hIdx = content.blocks.findIndex((b) => b.t === "h1");
+  const blocks = hIdx >= 0 && hIdx < 2 ? content.blocks.filter((_, i) => i !== hIdx) : content.blocks;
   return (
     <>
-      <Breadcrumbs items={[{ label: title, href: content.meta.path }]} />
-      <section className="bg-primary py-12 text-white sm:py-16">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <h1 className="text-4xl text-white sm:text-5xl">{title}</h1>
-          {intro && <p className="mt-4 max-w-2xl text-lg text-white/85">{intro}</p>}
+      <PageHero
+        eyebrow={eyebrow}
+        title={title}
+        highlight={highlight}
+        intro={intro}
+        crumbs={[{ label: title, href: content.meta.path }]}
+      />
+      <section className="section">
+        <div className="container">
+          <article className="mx-auto max-w-3xl">
+            <BlockRenderer blocks={blocks} headingShift />
+          </article>
         </div>
       </section>
-      <article className="mx-auto max-w-[1280px] px-6 py-14">
-        <BlockRenderer blocks={blocks} headingShift />
-      </article>
       {children}
-      {cta && <CtaBand />}
     </>
   );
 }

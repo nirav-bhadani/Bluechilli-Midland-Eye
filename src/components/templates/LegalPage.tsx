@@ -1,31 +1,37 @@
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { PageHero } from "@/components/layout/PageHero";
 import { BlockRenderer } from "@/components/sections/BlockRenderer";
 import type { LegalPageContent } from "@/lib/types";
 
-/** T2 document style: breadcrumb, H1, last-updated, verbatim prose, no CTAs. */
+/** Legal/document page: premium compact PageHero → verbatim prose, no CTA. */
 export function LegalPage({ content, title }: { content: LegalPageContent; title: string }) {
-  const blocks = content.blocks.filter(
-    (b, i) => !(i < 2 && b.t === "h1" && b.text.trim().toLowerCase() === title.trim().toLowerCase())
-  );
+  // Drop the leading title H1 (rendered by the hero instead), by position.
+  const hIdx = content.blocks.findIndex((b) => b.t === "h1");
+  const blocks = hIdx >= 0 && hIdx < 2 ? content.blocks.filter((_, i) => i !== hIdx) : content.blocks;
   return (
     <>
-      <Breadcrumbs items={[{ label: title, href: content.meta.path }]} />
-      <article className="mx-auto max-w-3xl px-6 py-12">
-        <h1 className="text-4xl">{title}</h1>
-        {content.lastModified && (
-          <p className="mt-3 text-sm text-body/70">
-            Last updated:{" "}
-            {new Date(content.lastModified).toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
-          </p>
-        )}
-        <div className="mt-8">
-          <BlockRenderer blocks={blocks} headingShift />
+      <PageHero
+        eyebrow="Legal & compliance"
+        title={title}
+        crumbs={[{ label: title, href: content.meta.path }]}
+      />
+      <section className="section">
+        <div className="container">
+          <article className="mx-auto max-w-3xl">
+            {content.lastModified && (
+              <p className="mb-8 inline-flex items-center gap-2 rounded-full bg-soft px-4 py-1.5 text-sm font-medium text-teal-dark ring-1 ring-inset ring-line">
+                <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                Last updated{" "}
+                {new Date(content.lastModified).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </p>
+            )}
+            <BlockRenderer blocks={blocks} headingShift />
+          </article>
         </div>
-      </article>
+      </section>
     </>
   );
 }

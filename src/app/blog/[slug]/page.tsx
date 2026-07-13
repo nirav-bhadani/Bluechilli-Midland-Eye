@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { PageHero } from "@/components/layout/PageHero";
 import { BlockRenderer } from "@/components/sections/BlockRenderer";
-import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { posts } from "@/content/posts";
 import { clinicId } from "@/lib/schema";
@@ -32,31 +31,33 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const post = posts.find((p) => p.slug === slug);
   if (!post) notFound();
 
-  // Drop the duplicated title heading from the migrated blocks.
   const blocks = post.blocks.filter(
     (b, i) => !(i < 3 && (b.t === "h1" || b.t === "h2") && b.text.trim() === post.title.trim())
   );
+  const dateLabel = post.published
+    ? new Date(post.published).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+    : undefined;
 
   return (
     <>
-      <Breadcrumbs
-        items={[
+      <PageHero
+        eyebrow={post.categories[0] ?? "Article"}
+        title={post.title}
+        intro={dateLabel ? `Published ${dateLabel}` : undefined}
+        crumbs={[
           { label: "Blog", href: "/blog" },
           { label: post.title, href: post.meta.path },
         ]}
       />
-      <article className="mx-auto max-w-3xl px-6 py-12">
-        <h1 className="text-3xl sm:text-4xl">{post.title}</h1>
-        <p className="mt-3 text-sm text-body/70">
-          {post.categories.join(" · ")}
-          {post.published &&
-            ` · Published ${new Date(post.published).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`}
-        </p>
-        <div className="mt-8">
-          <BlockRenderer blocks={blocks} headingShift />
+
+      <section className="section">
+        <div className="container">
+          <article className="mx-auto max-w-3xl">
+            <BlockRenderer blocks={blocks} headingShift />
+          </article>
         </div>
-      </article>
-      <CtaBand />
+      </section>
+
       <JsonLd
         data={{
           "@context": "https://schema.org",

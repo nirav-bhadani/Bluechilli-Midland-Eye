@@ -9,5 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <ContentPage content={content} title="About Midland Eye" />;
+  return (
+    <ContentPage
+      content={content}
+      eyebrow="About us"
+      title="About"
+      highlight="Midland Eye"
+      intro="A comprehensive private eye clinic in Solihull, rated 'Good' by the CQC and 5 stars on Trustpilot."
+    />
+  );
 }

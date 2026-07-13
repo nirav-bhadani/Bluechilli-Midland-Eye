@@ -9,5 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <ContentPage content={content} title="Translation Services" />;
+  return (
+    <ContentPage
+      content={content}
+      eyebrow="Accessibility"
+      title="Translation"
+      highlight="Services"
+      intro="Language support so every patient can understand their diagnosis and treatment."
+    />
+  );
 }

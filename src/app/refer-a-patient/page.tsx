@@ -9,5 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <ContentPage content={content} title="Refer a Patient" />;
+  return (
+    <ContentPage
+      content={content}
+      eyebrow="For professionals"
+      title="Refer a"
+      highlight="Patient"
+      intro="Seamless referrals for optometrists and GPs — direct schemes, referral forms and post-op protocols."
+    />
+  );
 }

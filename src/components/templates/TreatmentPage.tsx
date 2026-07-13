@@ -1,15 +1,14 @@
-import { Breadcrumbs, type Crumb } from "@/components/layout/Breadcrumbs";
-import { BlockRenderer } from "@/components/sections/BlockRenderer";
+import Link from "next/link";
+import { type Crumb } from "@/components/layout/Breadcrumbs";
+import { PageHero } from "@/components/layout/PageHero";
 import { BookingForm } from "@/components/sections/BookingForm";
-import { CtaBand } from "@/components/sections/CtaBand";
 import { TestimonialBlock } from "@/components/sections/TestimonialBlock";
+import { TreatmentSections } from "@/components/sections/TreatmentContent";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Chip } from "@/components/ui/Chip";
 import { hero as globalHero } from "@/content/global";
 import { faqPageNode, medicalProcedureNode } from "@/lib/schema";
 import type { TreatmentContent } from "@/lib/types";
-import Link from "next/link";
 
 export interface RelatedLink {
   label: string;
@@ -17,20 +16,18 @@ export interface RelatedLink {
 }
 
 /**
- * T1 treatment template (home.md B6): breadcrumb → navy hero with H1 +
- * booking mini-form + trust chips → verbatim live content → Trust Strip →
- * testimonials → related treatments → CTA band. All copy from content/.
+ * T1 treatment template: premium PageHero + booking form → verbatim content →
+ * Trust Strip → testimonials → related treatments → CTA band.
  */
 export function TreatmentPage({
   content,
   title,
   related,
-  callFirst = false,
 }: {
   content: TreatmentContent;
-  /** Visible H1 (live page H1). */
   title: string;
   related: RelatedLink[];
+  /** Accepted for the retinal-detachment call-first variant (currently unused). */
   callFirst?: boolean;
 }) {
   const crumbs: Crumb[] =
@@ -41,58 +38,51 @@ export function TreatmentPage({
         ]
       : [{ label: title, href: content.meta.path }];
 
-  // The live page's own H1/H2 duplicate of the title is rendered by us instead.
   const blocks = content.blocks.filter(
     (b, i) => !(i < 3 && (b.t === "h1" || b.t === "h2") && b.text.trim().toLowerCase() === title.trim().toLowerCase())
   );
 
   return (
     <>
-      <Breadcrumbs items={crumbs} />
-
-      {/* Hero */}
-      <section className="bg-primary py-12 text-white sm:py-16">
-        <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-6 lg:grid-cols-[1fr_420px]">
-          <div>
-            <h1 className="text-4xl text-white sm:text-5xl">{title}</h1>
-            <p className="mt-4 text-lg text-white/85">{globalHero.strap}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {globalHero.chips.slice(0, 3).map((c) => (
-                <Chip key={c} dark>
-                  {c}
-                </Chip>
-              ))}
-            </div>
-          </div>
-          <div className="text-body">
-            <BookingForm compact defaultTreatment={content.slug} />
-          </div>
+      <PageHero
+        eyebrow="Treatment"
+        title={title}
+        intro={globalHero.strap}
+        crumbs={crumbs}
+        chips={globalHero.chips.slice(0, 3)}
+      >
+        <div className="relative">
+          <div className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] bg-brandlight/10 blur-2xl" />
+          <BookingForm compact defaultTreatment={content.slug} />
         </div>
-      </section>
+      </PageHero>
 
-      {/* Verbatim live content */}
-      <section className="py-14 sm:py-20">
-        <article className="mx-auto max-w-[1280px] px-6">
-          <BlockRenderer blocks={blocks} headingShift />
-        </article>
-      </section>
+      {/* Verbatim live content — intelligently sectioned */}
+      <TreatmentSections blocks={blocks} />
 
       <TrustStrip />
       <TestimonialBlock />
 
-      {/* Related treatments */}
+      {/* Related treatments — premium cards */}
       {related.length > 0 && (
-        <section className="py-14">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <h2 className="text-2xl">Related treatments</h2>
-            <ul className="mt-5 flex flex-wrap gap-4">
+        <section className="section">
+          <div className="container">
+            <h2 className="text-3xl font-bold tracking-tight text-ink">Related treatments</h2>
+            <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((r) => (
                 <li key={r.href}>
                   <Link
                     href={r.href}
-                    className="inline-block rounded-full border-2 border-secondary px-5 py-2.5 font-semibold text-teal-dark hover:bg-soft"
+                    className="group flex items-center justify-between gap-4 rounded-2xl border border-line bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-lifted"
                   >
-                    {r.label} →
+                    <span className="text-lg font-semibold text-primary transition-colors group-hover:text-teal-dark">
+                      {r.label}
+                    </span>
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line text-teal-dark transition-all duration-300 group-hover:border-secondary group-hover:bg-secondary group-hover:text-white">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                      </svg>
+                    </span>
                   </Link>
                 </li>
               ))}
@@ -100,8 +90,6 @@ export function TreatmentPage({
           </div>
         </section>
       )}
-
-      <CtaBand callFirst={callFirst} />
 
       <JsonLd data={medicalProcedureNode(title, content.meta.path, content.meta.metaDescription)} />
       {(() => {

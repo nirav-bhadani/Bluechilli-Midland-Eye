@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { Block } from "@/lib/types";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { ButtonLink } from "@/components/ui/Button";
+import { stripInlineMedia } from "@/lib/html";
 
 /**
  * Renders verbatim content blocks in live-page order. Inline HTML inside
@@ -50,19 +51,22 @@ export function BlockRenderer({
                 {b.text}
               </h4>
             );
-          case "p":
+          case "p": {
+            const html = stripInlineMedia(b.html);
+            if (!html.replace(/&nbsp;|\s/g, "")) return null; // drop empty/icon-only paragraphs
             return (
               <p
                 key={i}
                 className="mt-4 max-w-[68ch] [&_a]:font-semibold [&_a]:text-teal-dark [&_a]:underline"
-                dangerouslySetInnerHTML={{ __html: b.html }}
+                dangerouslySetInnerHTML={{ __html: html }}
               />
             );
+          }
           case "ul":
             return (
               <ul key={i} className="mt-4 max-w-[68ch] list-disc space-y-2 pl-6 marker:text-secondary">
                 {b.items.map((li, k) => (
-                  <li key={k} dangerouslySetInnerHTML={{ __html: li }} />
+                  <li key={k} dangerouslySetInnerHTML={{ __html: stripInlineMedia(li) }} />
                 ))}
               </ul>
             );
@@ -70,7 +74,7 @@ export function BlockRenderer({
             return (
               <ol key={i} className="mt-4 max-w-[68ch] list-decimal space-y-2 pl-6 marker:text-secondary">
                 {b.items.map((li, k) => (
-                  <li key={k} dangerouslySetInnerHTML={{ __html: li }} />
+                  <li key={k} dangerouslySetInnerHTML={{ __html: stripInlineMedia(li) }} />
                 ))}
               </ol>
             );
@@ -79,7 +83,7 @@ export function BlockRenderer({
               <div key={i} className="mt-6 overflow-x-auto rounded-card border border-line">
                 <div
                   className="[&_table]:w-full [&_table]:border-collapse [&_td]:border-b [&_td]:border-line [&_td]:p-3 [&_th]:bg-soft [&_th]:p-3 [&_th]:text-left"
-                  dangerouslySetInnerHTML={{ __html: b.html }}
+                  dangerouslySetInnerHTML={{ __html: stripInlineMedia(b.html) }}
                 />
               </div>
             );

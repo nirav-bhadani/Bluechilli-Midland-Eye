@@ -1,3 +1,5 @@
+import { stripInlineMedia } from "@/lib/html";
+
 /**
  * Native <details> accordion — content stays in the HTML (indexable),
  * first item open by default (home.md B5). Server Component; no JS.
@@ -41,7 +43,7 @@ export function FaqAccordion({
           <div className="border-t border-line/60 px-6 pb-6 pt-4 motion-safe:animate-[faq-in_0.3s_ease-out]">
             <div
               className="[&_a]:font-semibold [&_a]:text-teal-dark [&_a]:underline [&_li]:mt-1 [&_p]:mt-2 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-5"
-              dangerouslySetInnerHTML={{ __html: item.a }}
+              dangerouslySetInnerHTML={{ __html: stripInlineMedia(item.a) }}
             />
           </div>
         </details>

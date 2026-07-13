@@ -16,8 +16,14 @@ export default function FinancePage() {
   const faq = faqPageNode(content.blocks);
   return (
     <>
-      <ContentPage content={content} title="Finance Options">
-        <div className="mx-auto max-w-[1280px] px-6 pb-14">
+      <ContentPage
+        content={content}
+        eyebrow="Payment plans"
+        title="Finance"
+        highlight="Options"
+        intro="Spread the cost of your treatment with 0% finance over 24 to 60 months — no hidden fees."
+      >
+        <div className="container pb-16">
           <FinanceCalculator />
         </div>
         <TrustStrip />

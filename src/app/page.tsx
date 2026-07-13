@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { BookingForm } from "@/components/sections/BookingForm";
 import { ConsultantSlider } from "@/components/sections/ConsultantSlider";
-import { CtaBand } from "@/components/sections/CtaBand";
-import { FaqAccordion } from "@/components/sections/FaqAccordion";
+import { FaqPremium } from "@/components/sections/FaqPremium";
 import { FinanceTeaser } from "@/components/sections/FinanceTeaser";
+import { FindUs } from "@/components/sections/FindUs";
 import { JourneyStepper } from "@/components/sections/JourneyStepper";
 import { TestimonialBlock } from "@/components/sections/TestimonialBlock";
 import { CountUp } from "@/components/motion/CountUp";
@@ -282,39 +282,83 @@ export default function Home() {
       </section>
 
       {/* ============================================================
-          5 — CLINIC INTRO: editorial pull-quote + lens-masked photo
+          5 — THE CLINIC: premium showcase, overlapping composition
           ============================================================ */}
       <section className="section overflow-hidden">
-        <div className="container grid items-center gap-14 lg:grid-cols-[1fr_0.85fr]">
-          <Reveal>
-            <Eyebrow>The clinic</Eyebrow>
-            {/* Verbatim live intro line */}
-            <p className="mt-6 text-[clamp(1.6rem,3vw,2.5rem)] font-semibold leading-snug text-ink">
-              Midland Eye Private Clinic has an extensive team of Consultant Ophthalmologists and
-              Surgeons, who offer{" "}
-              <span className="text-teal-dark">world-class patient experiences and outcomes.</span>
-            </p>
-            <div className="mt-8">
-              <ButtonLink href="/about-us" variant="text">
-                About Midland Eye
-              </ButtonLink>
+        <div className="container grid items-center gap-16 lg:grid-cols-2">
+          {/* Layered image composition */}
+          <Reveal className="order-2 lg:order-1">
+            <div className="relative mx-auto max-w-md px-4 pb-12 pt-4 sm:px-6 sm:pb-6">
+              <svg aria-hidden viewBox="0 0 200 200" fill="none" className="pointer-events-none absolute -left-4 -top-2 h-40 w-40 opacity-30">
+                <circle cx="100" cy="100" r="92" stroke="#40BADA" strokeWidth="3" />
+                <circle cx="100" cy="100" r="60" stroke="#0088A5" strokeWidth="3" />
+              </svg>
+              <div className="group relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-lifted">
+                <Image
+                  src="/images/2024_11_ophthalmology-medical-eye-exam-with-old-man-consulting-vision-healthcare-glaucoma-check-laser-light-innovation-with-face-patient-machine-scanning-optometry.jpg"
+                  alt="Consultant-led eye examination at Midland Eye"
+                  fill
+                  sizes="(min-width:1024px) 40vw, 90vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
+              </div>
+              {/* Overlapping secondary image */}
+              <div className="absolute -bottom-2 -right-3 hidden w-40 overflow-hidden rounded-2xl ring-4 ring-white shadow-lifted sm:block">
+                <div className="relative aspect-square">
+                  <Image src="/images/2024_11_elderly-couple-with-glasses-cuddling-up-one-other-during-tense-time-generative-ai.jpg" alt="" fill sizes="160px" className="object-cover" />
+                </div>
+              </div>
+              {/* Floating trust badge */}
+              <div className="glass absolute left-0 top-10 flex items-center gap-3 rounded-2xl p-4 shadow-lifted">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-soft">
+                  <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden>
+                    <path d="M12 3l2.6 5.6L21 9.3l-4.5 4 1.3 6L12 16.9 6.2 19.3l1.3-6L3 9.3l6.4-.7L12 3z" fill="#0088A5" />
+                  </svg>
+                </span>
+                <div>
+                  <p className="text-xl font-bold leading-none text-primary">5-star</p>
+                  <p className="mt-1 text-xs text-body/70">Doctify rated</p>
+                </div>
+              </div>
             </div>
           </Reveal>
 
-          <Reveal delay={0.1} className="relative mx-auto">
-            <div className="relative aspect-square w-[min(78vw,420px)] overflow-hidden rounded-full ring-8 ring-soft">
-              <Image
-                src="/images/2024_11_ophthalmology-medical-eye-exam-with-old-man-consulting-vision-healthcare-glaucoma-check-laser-light-innovation-with-face-patient-machine-scanning-optometry.jpg"
-                alt="Consultant-led eye examination at Midland Eye"
-                fill
-                sizes="420px"
-                className="object-cover"
-              />
+          {/* Content */}
+          <Reveal delay={0.1} className="order-1 lg:order-2">
+            <Eyebrow>The clinic</Eyebrow>
+            <h2 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+              World-class care, <Highlight>close to home</Highlight>
+            </h2>
+            {/* Verbatim live intro line */}
+            <p className="mt-6 text-lg text-body">
+              Midland Eye Private Clinic has an extensive team of Consultant Ophthalmologists and
+              Surgeons, who offer world-class patient experiences and outcomes.
+            </p>
+            <ul className="mt-7 space-y-3.5">
+              {[
+                "Locally based specialist team in Solihull",
+                "One year comprehensive free aftercare",
+                "State-of-the-art surgical facilities",
+              ].map((t) => (
+                <li key={t} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-soft">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 text-secondary" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="m5 13 4 4L19 7" />
+                    </svg>
+                  </span>
+                  <span className="text-[15px] text-body">{t}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <ButtonLink href="/about-us" variant="teal">
+                About Midland Eye
+              </ButtonLink>
+              <ButtonLink href="/consultants-and-specialist-page" variant="text">
+                Meet the consultants
+              </ButtonLink>
             </div>
-            <svg aria-hidden viewBox="0 0 200 200" fill="none" className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 opacity-40">
-              <circle cx="100" cy="100" r="92" stroke="#40BADA" strokeWidth="3" />
-              <circle cx="100" cy="100" r="60" stroke="#0088A5" strokeWidth="3" />
-            </svg>
           </Reveal>
         </div>
       </section>
@@ -322,36 +366,62 @@ export default function Home() {
       {/* 6 — CONSULTANTS: premium contained slider */}
       <ConsultantSlider items={featuredConsultants} />
 
-      {/* 7 — Journey (component) */}
-      <Reveal>
-        <JourneyStepper />
-      </Reveal>
+      {/* 7 — Journey (premium timeline) */}
+      <JourneyStepper />
 
-      {/* 8 — Finance (verbatim, component) */}
+      {/* 8 — Finance (verbatim, premium) */}
       <FinanceTeaser />
 
-      {/* 9 — Testimonials (component) */}
+      {/* 9 — Testimonials (luxury slider) */}
       <TestimonialBlock />
 
       {/* ============================================================
-          10 — FAQs
+          10 — FAQs (premium accordion)
           ============================================================ */}
       <section className="section">
-        <div className="container grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <Reveal>
+        <div className="container grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <Reveal className="lg:sticky lg:top-28">
             <Eyebrow>Answers</Eyebrow>
             <h2 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
               Frequently asked <Highlight>questions</Highlight>
             </h2>
-            <p className="mt-5 text-body">
-              Straight answers from our consultants. Can&rsquo;t see yours?{" "}
-              <Link href="/contact" className="font-semibold text-teal-dark underline">
-                Get in touch.
-              </Link>
+            <p className="mt-5 max-w-md text-body">
+              Straight answers from our consultants on the questions patients ask us most.
             </p>
+
+            {/* Help card — fills the space + adds a conversion point */}
+            <div className="mesh-navy relative mt-8 overflow-hidden rounded-[1.5rem] p-7 text-white shadow-lifted sm:p-8">
+              <svg aria-hidden viewBox="0 0 200 200" fill="none" className="pointer-events-none absolute -right-12 -top-12 h-56 w-56 opacity-15">
+                <circle cx="100" cy="100" r="90" stroke="#40BADA" strokeWidth="2" />
+                <circle cx="100" cy="100" r="58" stroke="#40BADA" strokeWidth="2" />
+              </svg>
+              <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-brandlight">
+                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M12 3a9 9 0 100 18 9 9 0 000-18z" />
+                  <path d="M9.5 9a2.5 2.5 0 015 .5c0 1.5-2.5 2-2.5 3.5M12 17h.01" />
+                </svg>
+              </span>
+              <h3 className="relative mt-5 text-2xl font-semibold text-white">
+                Still have a question?
+              </h3>
+              <p className="relative mt-2 text-white/75">
+                Our friendly patient team is here to help — call us or book your consultation and
+                we&rsquo;ll take care of the rest.
+              </p>
+              <a href={clinic.phoneHref} className="relative mt-6 flex items-center gap-3 text-2xl font-bold text-brandlight transition-colors hover:text-white">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25">☎</span>
+                {clinic.phone}
+              </a>
+              <div className="relative mt-6">
+                <ButtonLink href="/contact#booking-form" variant="accent">
+                  Book a Consultation
+                </ButtonLink>
+              </div>
+            </div>
           </Reveal>
+
           <Reveal delay={0.1}>
-            <FaqAccordion items={homeFaqs} />
+            <FaqPremium items={homeFaqs} />
           </Reveal>
         </div>
       </section>
@@ -370,118 +440,50 @@ export default function Home() {
             <p className="mt-5 text-lg text-body">Keep up to date with Midland Eye</p>
           </Reveal>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            {posts[0] && (
-              <Reveal>
-                <Link href={`/blog/${posts[0].slug}`} className="group block h-full overflow-hidden rounded-[1.75rem] border border-line bg-white shadow-soft transition-shadow duration-300 hover:shadow-lifted">
-                  {posts[0].image?.startsWith("/") && (
+          <RevealList className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {posts.slice(0, 3).map((p, idx) => (
+              <RevealItem key={p.slug} className={idx === 0 ? "md:col-span-2 lg:col-span-1" : ""}>
+                <Link href={`/blog/${p.slug}`} className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-white shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lifted">
+                  {p.image?.startsWith("/") && (
                     <div className="relative aspect-[16/10] overflow-hidden">
-                      <Image src={posts[0].image} alt="" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <Image src={p.image} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+                      {p.categories[0] && (
+                        <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-teal-dark backdrop-blur">
+                          {p.categories[0]}
+                        </span>
+                      )}
                     </div>
                   )}
-                  <div className="p-7">
-                    {posts[0].categories[0] && (
-                      <p className="text-xs font-medium uppercase tracking-[0.15em] text-teal-dark">
-                        {posts[0].categories[0]}
+                  <div className="flex flex-1 flex-col p-6">
+                    {p.published && (
+                      <p className="text-xs font-medium uppercase tracking-[0.15em] text-body/50">
+                        {new Date(p.published).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
                       </p>
                     )}
-                    <h3 className="mt-2 text-2xl font-bold text-primary group-hover:text-teal-dark">
-                      {posts[0].title}
+                    <h3 className="mt-2 text-xl font-bold text-primary transition-colors group-hover:text-teal-dark">
+                      {p.title}
                     </h3>
-                    {posts[0].excerpt && <p className="mt-3 text-body">{posts[0].excerpt.slice(0, 150)}…</p>}
+                    {p.excerpt && <p className="mt-3 text-[15px] text-body">{p.excerpt.slice(0, 120)}…</p>}
+                    <span className="mt-5 inline-flex items-center gap-2 pt-1 text-sm font-semibold text-teal-dark">
+                      Read more
+                      <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+                    </span>
                   </div>
                 </Link>
-              </Reveal>
-            )}
-            <div className="flex flex-col gap-6">
-              {posts.slice(1, 4).map((p, i) => (
-                <Reveal key={p.slug} delay={i * 0.08}>
-                  <Link href={`/blog/${p.slug}`} className="group flex gap-5 rounded-2xl border border-line bg-white p-4 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lifted">
-                    {p.image?.startsWith("/") && (
-                      <div className="relative aspect-square w-28 shrink-0 overflow-hidden rounded-xl">
-                        <Image src={p.image} alt="" fill sizes="112px" className="object-cover" />
-                      </div>
-                    )}
-                    <div className="min-w-0">
-                      {p.categories[0] && (
-                        <p className="text-xs font-medium uppercase tracking-[0.15em] text-teal-dark">
-                          {p.categories[0]}
-                        </p>
-                      )}
-                      <h3 className="mt-1 line-clamp-3 font-semibold text-primary group-hover:text-teal-dark">
-                        {p.title}
-                      </h3>
-                    </div>
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
+              </RevealItem>
+            ))}
+          </RevealList>
+
+          <div className="mt-12 flex justify-center">
+            <ButtonLink href="/blog" variant="outline">
+              View all articles
+            </ButtonLink>
           </div>
         </div>
       </section>
 
-      {/* ============================================================
-          12 — VISIT US
-          ============================================================ */}
-      <section className="section">
-        <div className="container grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal>
-            <Eyebrow>Find us</Eyebrow>
-            <h2 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-              Visit <Highlight>Us</Highlight>
-            </h2>
-            <address className="mt-6 space-y-1 text-lg not-italic text-body">
-              <p className="font-semibold text-primary">{clinic.name}</p>
-              <p>
-                {clinic.address.street}, {clinic.address.town}, {clinic.address.county},{" "}
-                {clinic.address.postcode}
-              </p>
-            </address>
-            <a href={clinic.phoneHref} className="mt-4 inline-block text-2xl font-bold text-teal-dark">
-              {clinic.phone}
-            </a>
-            <ul className="mt-5 space-y-1 text-body">
-              {clinic.openingTimes.map((o) => (
-                <li key={o.days}>
-                  <strong className="text-primary">{o.days}:</strong> {o.hours}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-7">
-              <ButtonLink
-                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                  `${clinic.name}, ${clinic.address.street}, ${clinic.address.town} ${clinic.address.postcode}`
-                )}`}
-                variant="text"
-              >
-                Get directions
-              </ButtonLink>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="mesh-navy relative h-full overflow-hidden rounded-[1.75rem] p-8 text-white">
-              <svg aria-hidden viewBox="0 0 200 200" fill="none" className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 opacity-15">
-                <circle cx="100" cy="100" r="90" stroke="#40BADA" strokeWidth="2" />
-                <circle cx="100" cy="100" r="60" stroke="#40BADA" strokeWidth="2" />
-              </svg>
-              <h3 className="relative text-2xl font-semibold text-white">Getting here</h3>
-              <p className="relative mt-3 text-white/80">
-                Free on-site parking is available. Solihull station is a short taxi journey away, and
-                we&rsquo;re open 7 days a week including evenings and weekends.
-              </p>
-              <p className="relative mt-6">
-                <a href={`mailto:${clinic.email}`} className="font-semibold text-brandlight underline">
-                  {clinic.email}
-                </a>
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 13 — CTA band */}
-      <CtaBand />
+      {/* 12 — Find Us (premium: map + details + form) */}
+      <FindUs />
 
       <JsonLd
         data={{ "@context": "https://schema.org", "@type": "WebSite", name: clinic.name, url: clinic.url }}

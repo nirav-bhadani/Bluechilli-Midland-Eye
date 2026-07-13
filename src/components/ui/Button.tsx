@@ -26,7 +26,8 @@ const variants: Record<Variant, { shell: string; fill: string; label: string }> 
     label: "group-hover:text-white",
   },
   white: {
-    shell: "bg-white text-primary shadow-soft",
+    // Border persists through the slide-fill, matching the accent CTA.
+    shell: "bg-white text-primary shadow-soft border-2 border-white",
     fill: "bg-primary",
     label: "group-hover:text-white",
   },

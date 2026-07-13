@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
 import { UtilityBar } from "@/components/layout/UtilityBar";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { clinicNode } from "@/lib/schema";
 import "./globals.css";
 
@@ -41,7 +42,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB" className={`${quicksand.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col pb-14 lg:pb-0">
+      <body className="min-h-full flex flex-col pb-14 lg:pb-0" suppressHydrationWarning>
+        <SmoothScroll />
         <UtilityBar />
         <Header />
         <div className="flex-1">{children}</div>

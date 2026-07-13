@@ -1,34 +1,32 @@
 import { clinic, hero } from "@/content/global";
 import { ButtonLink } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
+import { Highlight } from "@/components/ui/Highlight";
 
 /**
- * Navy conversion band (home.md B5). `callFirst` swaps CTA priority for
- * emergency-intent pages (retinal detachment).
+ * Navy conversion band. `callFirst` swaps CTA priority for emergency-intent
+ * pages (retinal detachment).
  */
 export function CtaBand({ callFirst = false }: { callFirst?: boolean }) {
   return (
-    <section className="relative overflow-hidden bg-primary py-16 text-white sm:py-20">
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 opacity-20"
-        viewBox="0 0 200 200"
-        fill="none"
-      >
+    <section className="mesh-navy relative overflow-hidden py-16 text-white sm:py-20">
+      <svg aria-hidden className="float-slow pointer-events-none absolute -right-24 -top-24 h-96 w-96 opacity-15" viewBox="0 0 200 200" fill="none">
         <circle cx="100" cy="100" r="80" stroke="#40BADA" strokeWidth="2" />
         <circle cx="100" cy="100" r="55" stroke="#40BADA" strokeWidth="2" />
         <circle cx="100" cy="100" r="30" stroke="#40BADA" strokeWidth="2" />
       </svg>
-      <div className="relative mx-auto max-w-[1280px] px-6 text-center">
-        <h2 className="text-3xl text-white sm:text-4xl">Book your consultation today</h2>
-        <p className="mt-3 text-lg text-white/85">{hero.strap}</p>
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+      <div className="container relative text-center">
+        <h2 className="mx-auto max-w-2xl text-3xl font-bold text-white sm:text-4xl">
+          Book your consultation <Highlight dark>today</Highlight>
+        </h2>
+        <p className="mt-4 text-lg text-white/85">{hero.strap}</p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           {callFirst ? (
             <>
-              <ButtonLink href={clinic.phoneHref} variant="accent" className="text-lg">
+              <ButtonLink href={clinic.phoneHref} variant="accent" size="lg">
                 ☎ Call {clinic.phone} now
               </ButtonLink>
-              <ButtonLink href="/contact#booking-form" variant="teal">
+              <ButtonLink href="/contact#booking-form" variant="white">
                 Book a Consultation
               </ButtonLink>
             </>
@@ -37,16 +35,13 @@ export function CtaBand({ callFirst = false }: { callFirst?: boolean }) {
               <ButtonLink href="/contact#booking-form" variant="accent">
                 Book a Consultation
               </ButtonLink>
-              <a
-                href={clinic.phoneHref}
-                className="text-lg font-semibold text-brandlight hover:text-white"
-              >
-                ☎ {clinic.phone}
-              </a>
+              <ButtonLink href="/finance-options" variant="white">
+                View Finance Options
+              </ButtonLink>
             </>
           )}
         </div>
-        <div className="mt-7 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           {hero.chips.slice(0, 3).map((c) => (
             <Chip key={c} dark>
               {c}

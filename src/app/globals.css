@@ -82,6 +82,18 @@
   h4 {
     font-weight: 600;
   }
+
+  /* Every clickable element gets the pointer cursor (native buttons default
+     to the arrow). Utilities can still override where needed. */
+  button:not(:disabled),
+  summary,
+  [role="button"],
+  a[href] {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -209,6 +221,21 @@ input[type="number"] {
   border: 2.5px solid rgba(255, 255, 255, 0.35);
   border-top-color: #ffffff;
   animation: aperture-spin 0.7s linear infinite;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 /* Hidden scrollbar (sliders) */
