@@ -91,8 +91,8 @@ export default function Home() {
           <circle cx="100" cy="100" r="16" stroke="#40BADA" strokeWidth="1.2" />
         </svg>
 
-        <div className="container relative grid items-center gap-14 pb-28 pt-20 lg:grid-cols-[1fr_520px] lg:pb-32 lg:pt-24">
-          <div className="max-w-2xl">
+        <div className="container relative grid grid-cols-1 items-center gap-14 pb-28 pt-20 lg:grid-cols-[minmax(0,1fr)_520px] lg:pb-32 lg:pt-24">
+          <div className="min-w-0 max-w-2xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-brandlight/40 bg-white/5 px-4 py-1.5 text-sm font-medium text-brandlight">
               <span className="h-1.5 w-1.5 rounded-full bg-brandlight" />
               Private eye hospital · Solihull
@@ -128,7 +128,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative text-body">
+          <div className="relative min-w-0 text-body">
             <div className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] bg-brandlight/10 blur-2xl" />
             <HeroAssistant bookingForm={<BookingForm compact />} />
           </div>
@@ -160,7 +160,7 @@ export default function Home() {
           3 — OUR EXPERTISE (redesigned): sticky intro + premium cards
           ============================================================ */}
       <section className="section">
-        <div className="container grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+        <div className="container grid grid-cols-1 gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <Reveal className="lg:sticky lg:top-28">
             <Eyebrow>Our expertise</Eyebrow>
             <h2 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
@@ -286,7 +286,7 @@ export default function Home() {
           5 — THE CLINIC: premium showcase, overlapping composition
           ============================================================ */}
       <section className="section overflow-hidden">
-        <div className="container grid items-center gap-16 lg:grid-cols-2">
+        <div className="container grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
           {/* Layered image composition */}
           <Reveal className="order-2 lg:order-1">
             <div className="relative mx-auto max-w-md px-4 pb-12 pt-4 sm:px-6 sm:pb-6">
@@ -380,7 +380,7 @@ export default function Home() {
           10 — FAQs (premium accordion)
           ============================================================ */}
       <section className="section">
-        <div className="container grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+        <div className="container grid grid-cols-1 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <Reveal className="lg:sticky lg:top-28">
             <Eyebrow>Answers</Eyebrow>
             <h2 className="mt-5 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
