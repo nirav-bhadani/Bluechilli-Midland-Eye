@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { HeroAssistant } from "@/components/chat/hero-assistant";
 import { BookingForm } from "@/components/sections/BookingForm";
 import { ConsultantSlider } from "@/components/sections/ConsultantSlider";
 import { FaqPremium } from "@/components/sections/FaqPremium";
@@ -90,7 +91,7 @@ export default function Home() {
           <circle cx="100" cy="100" r="16" stroke="#40BADA" strokeWidth="1.2" />
         </svg>
 
-        <div className="container relative grid items-center gap-14 pb-28 pt-20 lg:grid-cols-[1.05fr_440px] lg:pb-32 lg:pt-24">
+        <div className="container relative grid items-center gap-14 pb-28 pt-20 lg:grid-cols-[1fr_520px] lg:pb-32 lg:pt-24">
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-brandlight/40 bg-white/5 px-4 py-1.5 text-sm font-medium text-brandlight">
               <span className="h-1.5 w-1.5 rounded-full bg-brandlight" />
@@ -129,7 +130,7 @@ export default function Home() {
 
           <div className="relative text-body">
             <div className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] bg-brandlight/10 blur-2xl" />
-            <BookingForm compact />
+            <HeroAssistant bookingForm={<BookingForm compact />} />
           </div>
         </div>
       </section>

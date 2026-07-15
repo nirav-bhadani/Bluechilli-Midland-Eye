@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
+import { ChatWidget } from "@/components/chat/chat-widget";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
@@ -49,6 +50,7 @@ export default function RootLayout({
         <div className="flex-1">{children}</div>
         <Footer />
         <StickyMobileBar />
+        <ChatWidget />
         <JsonLd data={clinicNode()} />
       </body>
     </html>

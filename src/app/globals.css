@@ -311,3 +311,77 @@ html.lenis body {
     animation-duration: 1.5s !important;
   }
 }
+
+/* ============================================================
+   Chat assistant — markdown bubble + typing indicator
+   ============================================================ */
+.prose-chat {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-body);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.prose-chat p {
+  margin: 0 0 0.6rem;
+}
+.prose-chat p:last-child {
+  margin-bottom: 0;
+}
+.prose-chat strong {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+.prose-chat ul,
+.prose-chat ol {
+  margin: 0 0 0.6rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.prose-chat ul {
+  list-style: disc;
+}
+.prose-chat ol {
+  list-style: decimal;
+}
+.prose-chat a {
+  color: var(--color-teal-dark);
+  text-decoration: underline;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.prose-chat code {
+  background: var(--color-soft);
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+  font-size: 0.85em;
+}
+.prose-chat h1,
+.prose-chat h2,
+.prose-chat h3 {
+  color: var(--color-primary);
+  font-weight: 700;
+  margin: 0.4rem 0;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-secondary);
+  animation: typing-dot 1.2s ease-in-out infinite;
+}
+@keyframes typing-dot {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
